@@ -25,6 +25,11 @@ test-tube:
 test-tube-dev: workspace-optimize
     cargo test --features "test-tube"
 
+test-tube-proposal-single-instant:
+    cargo test --package dao-proposal-single-instant --lib -- --include-ignored testing::test_tube --nocapture --test-threads=1
+
+test_psi: test-tube-proposal-single-instant
+
 integration-test-dev test_name="":
 	SKIP_CONTRACT_STORE=true RUST_LOG=info CONFIG='{{`pwd`}}/ci/configs/cosm-orc/local.yaml' cargo integration-test {{test_name}}
 
@@ -49,9 +54,9 @@ deploy-local: download-deps
 
 download-deps:
 	mkdir -p artifacts target
-	wget https://github.com/CosmWasm/cw-plus/releases/latest/download/cw20_base.wasm -O artifacts/cw20_base.wasm
-	wget https://github.com/CosmWasm/cw-plus/releases/latest/download/cw4_group.wasm -O artifacts/cw4_group.wasm
-	wget https://github.com/CosmWasm/cw-nfts/releases/latest/download/cw721_base.wasm -O artifacts/cw721_base.wasm
+	sudo  wget https://github.com/CosmWasm/cw-plus/releases/latest/download/cw20_base.wasm -O artifacts/cw20_base.wasm
+	sudo wget https://github.com/CosmWasm/cw-plus/releases/latest/download/cw4_group.wasm -O artifacts/cw4_group.wasm
+	sudo wget https://github.com/CosmWasm/cw-nfts/releases/latest/download/cw721_base.wasm -O artifacts/cw721_base.wasm
 
 workspace-optimize:
     #!/bin/bash
